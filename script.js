@@ -1,6 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
     // First 1000 digits of PI (excluding the 3 before the decimal)
-    const PI_DIGITS = '1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989';
+    const PI_DIGITS = '141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930381964428810975665933446128475648233786783165271201909145648566923460348610454326648213393607260249141273724587006606315588174881520920962829254091715364367892590360011330530548820466521384146951941511609433057270365759591953092186117381932611793105118548074462379962749567351885752724891227938183011949129833673362440656643086021394946395224737190702179860943702770539217176293176752384674818467669405132000568127145263560827785771342757789609173637178721468440901224953430146549585371050792279689258923542019956112129021960864034418159813629774771309960518707211349999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989';
+
+    // Define an array of colors to cycle through every 6 digits
+    const DIGIT_COLORS = [
+        '#3498db', // Blue
+        '#2ecc71', // Green
+        '#e74c3c', // Red
+        '#f39c12', // Orange
+        '#9b59b6', // Purple
+        '#1abc9c'  // Turquoise
+    ];
 
     const piDisplay = document.getElementById('pi-display');
     const digitsDisplay = document.getElementById('digits-display');
@@ -22,6 +32,11 @@ document.addEventListener('DOMContentLoaded', () => {
     revealBtn.addEventListener('click', revealCurrentDigit);
     piDisplay.addEventListener('click', () => piDisplay.focus());
 
+    // Get color for a digit based on its position
+    function getDigitColor(index) {
+        return DIGIT_COLORS[Math.floor(index / 6) % DIGIT_COLORS.length];
+    }
+
     // Handle key presses
     function handleKeyDown(e) {
         // Only process if it's a digit key (0-9)
@@ -41,6 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const digitElement = document.createElement('span');
                 digitElement.classList.add('digit');
                 digitElement.textContent = inputDigit;
+                
+                // Set color based on position
+                digitElement.style.color = getDigitColor(enteredDigits.length);
                 
                 // Check if the input digit is correct
                 const isCorrect = inputDigit === correctDigit;
@@ -84,6 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const digitElement = document.createElement('span');
                 digitElement.classList.add('digit');
                 digitElement.textContent = inputDigit;
+                
+                // Set color based on position
+                digitElement.style.color = getDigitColor(enteredDigits.length);
                 
                 // Check if the input digit is correct
                 const isCorrect = inputDigit === correctDigit;
@@ -184,6 +205,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const digitElement = document.createElement('span');
             digitElement.classList.add('digit', 'revealed');
             digitElement.textContent = PI_DIGITS[currentIndex];
+            
+            // Set color based on position
+            digitElement.style.color = getDigitColor(currentIndex);
+            
             digitsDisplay.appendChild(digitElement);
             
             // Add to entered digits so we can continue after

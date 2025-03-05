@@ -84,22 +84,22 @@ p {
     margin-right: 2px;
     margin-bottom: 5px;
     transition: all 0.2s ease;
+    font-weight: bold;
 }
 
 .digit.correct {
-    color: #27ae60;
     font-weight: bold;
 }
 
 .digit.incorrect {
-    color: #e74c3c;
+    color: #e74c3c !important;
     text-decoration: line-through;
     font-weight: bold;
 }
 
 .digit.revealed {
-    color: #3498db;
     font-style: italic;
+    font-weight: bold;
 }
 
 .cursor-indicator {
@@ -127,6 +127,7 @@ p {
     justify-content: center;
     gap: 20px;
     margin-bottom: 30px;
+    flex-wrap: wrap;
 }
 
 button {

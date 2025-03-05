@@ -10,6 +10,7 @@ A web application that tests your knowledge of the digits of PI. How many digits
   - Green: Correct digits
   - Red: Incorrect digits
   - Blue: Revealed digits
+- Font color changes every six digits to help with memorization
 - Background briefly changes color when you make a mistake
 - Must correct any incorrect digit before continuing
 - Keeps track of your current streak of correct digits
@@ -28,8 +29,9 @@ A web application that tests your knowledge of the digits of PI. How many digits
 
 1. Click on the display area and start typing the digits of PI (after the decimal point, starting with 1, 4, 1, 5...)
 2. If you make a mistake, the digit will appear in red, and you must correct it before continuing
-3. Press the "Reveal" button if you get stuck
+3. Press the "Reveal" button if you get stuck on a particular digit
 4. Use the "Reset" button to start over
+5. Notice how the color changes every six digits to help you memorize patterns
 
 ## Keyboard Shortcuts
 
