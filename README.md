@@ -4,17 +4,20 @@ A web application that tests your knowledge of the digits of PI. How many digits
 
 ## Features
 
-- Type consecutive digits of PI to test your memory
+- Type consecutive digits of PI directly in the display area
 - Visual feedback for correct and incorrect digits
 - Digits are color-coded:
   - Green: Correct digits
   - Red: Incorrect digits
   - Blue: Revealed digits
 - Background briefly changes color when you make a mistake
-- Keeps track of your current streak and total correct digits
+- Incorrect digits can be overwritten with another guess
+- Keeps track of your current streak of correct digits
+- Streak is maintained even when you make a wrong guess
 - Reset button to start over
-- Option to reveal the next digit if you're stuck
-- Option to reveal PI to a configurable number of digits
+- Reveal button to show the current digit if you're stuck
+- Contains the first 1000 digits of PI (after the decimal point)
+- Backspace key to remove the last digit
 
 ## How to Run
 
@@ -23,15 +26,15 @@ A web application that tests your knowledge of the digits of PI. How many digits
 
 ## How to Use
 
-1. Start typing the digits of PI (after the decimal point, starting with 1, 4, 1, 5...)
-2. If you make a mistake, the digit will appear in red, but you can continue guessing
-3. Press the "Reveal Next Digit" button if you get stuck
+1. Click on the display area and start typing the digits of PI (after the decimal point, starting with 1, 4, 1, 5...)
+2. If you make a mistake, the digit will appear in red, and you can type again to replace it
+3. Press the "Reveal" button if you get stuck
 4. Use the "Reset" button to start over
-5. Use the "Show" button to reveal PI to a specified number of digits
 
 ## Keyboard Shortcuts
 
 - `Escape` key: Reset the game
+- `Backspace` key: Remove the last digit
 
 ## Technical Details
 

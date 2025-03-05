@@ -9,25 +9,22 @@
 <body>
     <div class="container">
         <h1>PI Digits Challenge</h1>
-        <p>Test how many digits of PI you know! Type the digits below:</p>
+        <p>Test how many digits of PI you know! Click and type directly in the box below:</p>
+        <p class="sub-text">(Contains the first 1000 digits of PI after the decimal point)</p>
         
-        <div class="pi-display">
+        <div class="pi-display" id="pi-display" tabindex="0">
             <span class="pi-start">3.</span>
             <div id="digits-display"></div>
-        </div>
-        
-        <div class="input-section">
-            <input type="number" id="digit-input" placeholder="Type next digit" autofocus>
+            <span class="cursor-indicator" id="cursor-indicator">|</span>
         </div>
         
         <div class="stats">
-            <p>Correct digits: <span id="correct-count">0</span></p>
             <p>Current streak: <span id="current-streak">0</span></p>
         </div>
         
         <div class="controls">
             <button id="reset-btn">Reset</button>
-            <button id="reveal-next-btn">Reveal Next Digit</button>
+            <button id="reveal-next-btn">Reveal</button>
         </div>
         
         <div class="reveal-section">

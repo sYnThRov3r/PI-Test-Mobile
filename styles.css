@@ -32,6 +32,14 @@ p {
     color: #34495e;
 }
 
+.sub-text {
+    font-size: 14px;
+    color: #7f8c8d;
+    margin-top: -15px;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
 .pi-display {
     display: flex;
     align-items: center;
@@ -41,6 +49,15 @@ p {
     margin-bottom: 20px;
     overflow-x: auto;
     min-height: 60px;
+    cursor: text;
+    position: relative;
+    outline: none;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+.pi-display:focus {
+    border-color: #3498db;
 }
 
 .pi-start {
@@ -54,6 +71,7 @@ p {
     display: flex;
     font-size: 24px;
     letter-spacing: 2px;
+    min-height: 36px;
 }
 
 .digit {
@@ -77,19 +95,22 @@ p {
     font-style: italic;
 }
 
-.input-section {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
+.cursor-indicator {
+    display: inline-block;
+    font-size: 24px;
+    color: #3498db;
+    font-weight: bold;
+    margin-left: 2px;
+    animation: blink 1s infinite;
 }
 
-#digit-input {
-    width: 100px;
-    padding: 10px;
-    font-size: 20px;
-    text-align: center;
-    border: 2px solid #3498db;
-    border-radius: 5px;
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.input-section {
+    display: none;
 }
 
 .stats {
@@ -130,39 +151,11 @@ button:hover {
 }
 
 .reveal-section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-#reveal-digits {
-    width: 70px;
-    padding: 8px;
-    margin: 0 10px;
-    text-align: center;
-    border: 1px solid #bdc3c7;
-    border-radius: 5px;
-}
-
-#show-pi-btn {
-    margin-left: 10px;
-    background-color: #2ecc71;
-}
-
-#show-pi-btn:hover {
-    background-color: #27ae60;
+    display: none;
 }
 
 .pi-reveal-display {
-    padding: 15px;
-    background-color: #ecf0f1;
-    border-radius: 5px;
-    font-size: 18px;
-    line-height: 1.5;
-    word-break: break-all;
     display: none;
-    color: #2c3e50;
 }
 
 body.error {
