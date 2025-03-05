@@ -42,13 +42,15 @@ p {
 
 .pi-display {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
+    align-items: flex-start;
     padding: 15px;
     background-color: #ecf0f1;
     border-radius: 5px;
     margin-bottom: 20px;
-    overflow-x: auto;
-    min-height: 60px;
+    min-height: 200px;
+    max-height: 300px;
+    overflow-y: auto;
     cursor: text;
     position: relative;
     outline: none;
@@ -65,17 +67,22 @@ p {
     font-weight: bold;
     margin-right: 5px;
     color: #2c3e50;
+    align-self: flex-start;
 }
 
 #digits-display {
     display: flex;
+    flex-wrap: wrap;
     font-size: 24px;
     letter-spacing: 2px;
     min-height: 36px;
+    width: calc(100% - 30px);
+    align-self: flex-start;
 }
 
 .digit {
     margin-right: 2px;
+    margin-bottom: 5px;
     transition: all 0.2s ease;
 }
 
@@ -96,12 +103,7 @@ p {
 }
 
 .cursor-indicator {
-    display: inline-block;
-    font-size: 24px;
-    color: #3498db;
-    font-weight: bold;
-    margin-left: 2px;
-    animation: blink 1s infinite;
+    display: none;
 }
 
 @keyframes blink {

@@ -11,7 +11,7 @@ A web application that tests your knowledge of the digits of PI. How many digits
   - Red: Incorrect digits
   - Blue: Revealed digits
 - Background briefly changes color when you make a mistake
-- Incorrect digits can be overwritten with another guess
+- Must correct any incorrect digit before continuing
 - Keeps track of your current streak of correct digits
 - Streak is maintained even when you make a wrong guess
 - Reset button to start over
@@ -27,7 +27,7 @@ A web application that tests your knowledge of the digits of PI. How many digits
 ## How to Use
 
 1. Click on the display area and start typing the digits of PI (after the decimal point, starting with 1, 4, 1, 5...)
-2. If you make a mistake, the digit will appear in red, and you can type again to replace it
+2. If you make a mistake, the digit will appear in red, and you must correct it before continuing
 3. Press the "Reveal" button if you get stuck
 4. Use the "Reset" button to start over
 
