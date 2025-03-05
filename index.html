@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PI Digits Challenge</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>PI Digits Challenge</h1>
+        <p>Test how many digits of PI you know! Type the digits below:</p>
+        
+        <div class="pi-display">
+            <span class="pi-start">3.</span>
+            <div id="digits-display"></div>
+        </div>
+        
+        <div class="input-section">
+            <input type="number" id="digit-input" placeholder="Type next digit" autofocus>
+        </div>
+        
+        <div class="stats">
+            <p>Correct digits: <span id="correct-count">0</span></p>
+            <p>Current streak: <span id="current-streak">0</span></p>
+        </div>
+        
+        <div class="controls">
+            <button id="reset-btn">Reset</button>
+            <button id="reveal-next-btn">Reveal Next Digit</button>
+        </div>
+        
+        <div class="reveal-section">
+            <label for="reveal-digits">Reveal PI to </label>
+            <input type="number" id="reveal-digits" min="1" max="1000" value="10">
+            <label> digits</label>
+            <button id="show-pi-btn">Show</button>
+        </div>
+        
+        <div id="pi-reveal-display" class="pi-reveal-display">
+            <span>3.</span><span id="pi-reveal"></span>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html> 
