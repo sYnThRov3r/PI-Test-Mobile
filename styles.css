@@ -136,12 +136,36 @@ p {
     font-weight: bold;
 }
 
+.reveal-settings {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #34495e;
+}
+
 .controls {
     display: flex;
     justify-content: center;
     gap: 20px;
     margin-bottom: 30px;
     flex-wrap: wrap;
+}
+
+.reveal-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#reveal-count {
+    width: 60px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
 button {

@@ -18,10 +18,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentStreak = document.getElementById('current-streak');
     const resetBtn = document.getElementById('reset-btn');
     const revealBtn = document.getElementById('reveal-next-btn');
+    const revealCount = document.getElementById('reveal-count');
 
     let enteredDigits = [];
     let streak = 0;
     let lastDigitCorrect = true; // Track if the last digit entered was correct
+
+    // Load saved reveal count from localStorage if available
+    if (localStorage.getItem('revealCount')) {
+        revealCount.value = localStorage.getItem('revealCount');
+    }
+
+    // Save reveal count when changed
+    revealCount.addEventListener('change', () => {
+        // Ensure the value is within the allowed range
+        const count = parseInt(revealCount.value);
+        if (count < 1) revealCount.value = 1;
+        if (count > 1000) revealCount.value = 1000;
+        
+        // Save to localStorage
+        localStorage.setItem('revealCount', revealCount.value);
+    });
+    
+    // Handle Enter key in reveal count input
+    revealCount.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            revealDigits();
+        }
+    });
 
     // Focus on the PI display initially
     piDisplay.focus();
@@ -29,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Setup event listeners
     piDisplay.addEventListener('keydown', handleKeyDown);
     resetBtn.addEventListener('click', resetGame);
-    revealBtn.addEventListener('click', revealCurrentDigit);
+    revealBtn.addEventListener('click', revealDigits);
     piDisplay.addEventListener('click', () => piDisplay.focus());
     
     // Handle resize events to ensure proper display
@@ -200,34 +225,48 @@ document.addEventListener('DOMContentLoaded', () => {
         currentStreak.textContent = streak;
     }
 
-    // Reveal the current digit of PI (the one the user is stuck on)
-    function revealCurrentDigit() {
+    // Reveal multiple digits of PI based on the reveal count setting
+    function revealDigits() {
         // If the last digit was incorrect, replace it
         if (!lastDigitCorrect && enteredDigits.length > 0) {
             digitsDisplay.removeChild(digitsDisplay.lastChild);
             enteredDigits.pop();
         }
         
-        const currentIndex = enteredDigits.length;
+        // Get the number of digits to reveal
+        const count = parseInt(revealCount.value);
         
-        if (currentIndex < PI_DIGITS.length) {
-            const digitElement = document.createElement('span');
-            digitElement.classList.add('digit', 'revealed');
-            digitElement.textContent = PI_DIGITS[currentIndex];
+        // Limit to remaining digits if count is too large
+        const remainingDigits = PI_DIGITS.length - enteredDigits.length;
+        const actualCount = Math.min(count, remainingDigits);
+        
+        // Reveal the specified number of digits
+        for (let i = 0; i < actualCount; i++) {
+            const currentIndex = enteredDigits.length;
             
-            // Set color based on position
-            digitElement.style.color = getDigitColor(currentIndex);
-            
-            digitsDisplay.appendChild(digitElement);
-            
-            // Add to entered digits so we can continue after
-            enteredDigits.push(PI_DIGITS[currentIndex]);
-            lastDigitCorrect = true;
-            
-            // Ensure the revealed digit is visible
-            ensureDigitVisible();
+            if (currentIndex < PI_DIGITS.length) {
+                const digitElement = document.createElement('span');
+                digitElement.classList.add('digit', 'revealed');
+                digitElement.textContent = PI_DIGITS[currentIndex];
+                
+                // Set color based on position
+                digitElement.style.color = getDigitColor(currentIndex);
+                
+                digitsDisplay.appendChild(digitElement);
+                
+                // Add to entered digits and increment streak
+                enteredDigits.push(PI_DIGITS[currentIndex]);
+                streak++;
+            } else {
+                // Break if we've reached the end of PI digits
+                break;
+            }
         }
         
+        // Update stats and ensure visibility
+        lastDigitCorrect = true;
+        updateStats();
+        ensureDigitVisible();
         piDisplay.focus();
     }
 
