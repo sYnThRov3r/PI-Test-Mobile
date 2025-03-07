@@ -31,6 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
     resetBtn.addEventListener('click', resetGame);
     revealBtn.addEventListener('click', revealCurrentDigit);
     piDisplay.addEventListener('click', () => piDisplay.focus());
+    
+    // Handle resize events to ensure proper display
+    window.addEventListener('resize', ensureDigitVisible);
+    piDisplay.addEventListener('mouseup', ensureDigitVisible); // After resizing with mouse
 
     // Get color for a digit based on its position
     function getDigitColor(index) {
@@ -173,6 +177,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function ensureDigitVisible() {
         // Scroll to the bottom to ensure the latest digit is visible
         piDisplay.scrollTop = piDisplay.scrollHeight;
+        
+        // Adjust the width of the digits display to fit the container
+        // This helps with proper text wrapping when resizing
+        const containerWidth = piDisplay.clientWidth;
+        digitsDisplay.style.maxWidth = (containerWidth - 40) + 'px'; // Subtract padding and other elements
     }
 
     // Reset the game
@@ -221,6 +230,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         piDisplay.focus();
     }
+
+    // Initialize the display
+    ensureDigitVisible();
 
     // Add keyboard shortcut for reset (Escape key)
     document.addEventListener('keydown', (e) => {

@@ -17,6 +17,7 @@ A web application that tests your knowledge of the digits of PI. How many digits
 - Streak is maintained even when you make a wrong guess
 - Reset button to start over
 - Reveal button to show the current digit if you're stuck
+- Resizable text box that can be adjusted to your preference
 - Contains the first 1000 digits of PI (after the decimal point)
 - Backspace key to remove the last digit
 
@@ -32,6 +33,7 @@ A web application that tests your knowledge of the digits of PI. How many digits
 3. Press the "Reveal" button if you get stuck on a particular digit
 4. Use the "Reset" button to start over
 5. Notice how the color changes every six digits to help you memorize patterns
+6. Resize the text box by dragging the bottom-right corner to adjust the display area
 
 ## Keyboard Shortcuts
 
