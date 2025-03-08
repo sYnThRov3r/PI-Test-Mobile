@@ -86,6 +86,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Setup numeric keypad event listeners
     keypadButtons.forEach(button => {
         button.addEventListener('click', handleKeypadButtonClick);
+        
+        // Add event listeners to reset button state after click
+        button.addEventListener('mouseup', function() {
+            // Remove focus to ensure the button returns to default state
+            this.blur();
+        });
+        
+        button.addEventListener('touchend', function() {
+            // Remove focus to ensure the button returns to default state
+            this.blur();
+        });
     });
 
     // Handle keypad button clicks
@@ -115,6 +126,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Focus back on the pi display
         piDisplay.focus();
+        
+        // Remove focus from the button to ensure it returns to default state
+        e.target.blur();
     }
 
     // Get color for a digit based on its position
