@@ -38,6 +38,8 @@ body {
 h1 {
     color: #2c3e50;
     text-align: center;
+    margin: 0;
+    line-height: 1.2;
 }
 
 /* Info button styling */
@@ -50,6 +52,15 @@ h1 {
     padding: 0;
     margin-left: 10px;
     transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    width: 32px;
+    line-height: 1;
+}
+
+.info-btn i {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -386,6 +397,12 @@ body.error {
         font-size: 24px;
     }
     
+    .info-btn {
+        font-size: 22px;
+        height: 28px;
+        width: 28px;
+    }
+    
     p {
         font-size: 14px;
     }
@@ -404,7 +421,6 @@ body.error {
         gap: 10px;
     }
     
-    /* Hide the main reset button on mobile since we have one in the keypad */
     #reset-btn {
         display: none;
     }
