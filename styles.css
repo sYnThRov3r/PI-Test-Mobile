@@ -62,7 +62,7 @@ p {
     outline: none;
     border: 2px solid transparent;
     transition: border-color 0.3s ease;
-    resize: vertical;
+    resize: none;
 }
 
 .pi-display:focus {
@@ -80,6 +80,7 @@ p {
     clip-path: polygon(100% 0, 100% 100%, 0 100%);
     opacity: 0.7;
     pointer-events: none;
+    display: none;
 }
 
 .pi-start {
