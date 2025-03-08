@@ -316,6 +316,11 @@ body.error {
         gap: 10px;
     }
     
+    /* Hide the main reset button on mobile since we have one in the keypad */
+    #reset-btn {
+        display: none;
+    }
+    
     button {
         padding: 8px 15px;
         font-size: 14px;

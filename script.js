@@ -37,8 +37,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // On mobile, make sure the pi-display doesn't show the system keyboard
         if (isMobileDevice) {
             piDisplay.setAttribute('readonly', 'readonly');
+            
+            // Hide the main reset button on mobile (handled in CSS now)
+            // resetBtn.style.display = 'none';
         } else {
             piDisplay.removeAttribute('readonly');
+            
+            // Show the main reset button on desktop
+            // resetBtn.style.display = 'block';
         }
     }
 
