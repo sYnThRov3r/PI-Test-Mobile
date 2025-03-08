@@ -54,15 +54,15 @@ p {
     background-color: #ecf0f1;
     border-radius: 5px;
     margin-bottom: 20px;
-    min-height: 150px;
-    max-height: 300px;
+    min-height: 100px;
+    max-height: 150px;
     overflow-y: auto;
     cursor: text;
     position: relative;
     outline: none;
     border: 2px solid transparent;
     transition: border-color 0.3s ease;
-    resize: both;
+    resize: vertical;
 }
 
 .pi-display:focus {
@@ -310,7 +310,8 @@ body.error {
     }
     
     .pi-display {
-        min-height: 120px;
+        min-height: 80px;
+        max-height: 120px;
         resize: none;
     }
     

@@ -251,7 +251,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Ensure the last entered digit is visible in the display
     function ensureDigitVisible() {
         if (digitsDisplay.lastChild) {
+            // Scroll to the last digit with smooth behavior
             digitsDisplay.lastChild.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            // Also ensure the container scrolls to show the latest content
+            piDisplay.scrollTop = piDisplay.scrollHeight;
         }
     }
     
