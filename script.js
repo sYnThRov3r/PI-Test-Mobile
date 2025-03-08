@@ -23,11 +23,39 @@ document.addEventListener('DOMContentLoaded', () => {
     const revealCount = document.getElementById('reveal-count');
     const numericKeypad = document.getElementById('numeric-keypad');
     const keypadButtons = document.querySelectorAll('.keypad-btn');
+    
+    // Info popup elements
+    const infoBtn = document.getElementById('info-btn');
+    const infoPopup = document.getElementById('info-popup');
+    const closePopup = document.querySelector('.close-popup');
 
     let enteredDigits = [];
     let streak = 0;
     let lastDigitCorrect = true; // Track if the last digit entered was correct
     let isMobileDevice = false;
+
+    // Info popup functionality
+    infoBtn.addEventListener('click', () => {
+        infoPopup.classList.add('show');
+    });
+    
+    closePopup.addEventListener('click', () => {
+        infoPopup.classList.remove('show');
+    });
+    
+    // Close popup when clicking outside the content
+    infoPopup.addEventListener('click', (e) => {
+        if (e.target === infoPopup) {
+            infoPopup.classList.remove('show');
+        }
+    });
+    
+    // Close popup with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && infoPopup.classList.contains('show')) {
+            infoPopup.classList.remove('show');
+        }
+    });
 
     // Check if the device is mobile
     function checkMobileDevice() {

@@ -5,12 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>PI Digits Challenge</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- Add Font Awesome for the info icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <h1>PI Digits Challenge</h1>
-        <p>Test how many digits of PI you know! Click and type directly in the box below:</p>
-        <p class="sub-text">(Contains the first 1000 digits of PI)</p>
+        <div class="title-container">
+            <h1>PI Digits Challenge</h1>
+            <button id="info-btn" class="info-btn" aria-label="Information">
+                <i class="fas fa-info-circle"></i>
+            </button>
+        </div>
+        
+        <!-- Info popup -->
+        <div id="info-popup" class="info-popup">
+            <div class="info-popup-content">
+                <span class="close-popup">&times;</span>
+                <h2>About PI Digits Challenge</h2>
+                <p>Test how many digits of PI you know! Click and type directly in the box below.</p>
+                <p>(Contains the first 1000 digits of PI)</p>
+            </div>
+        </div>
         
         <div class="pi-display" id="pi-display" tabindex="0">
             <span class="pi-start">3.</span>
