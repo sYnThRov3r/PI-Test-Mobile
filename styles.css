@@ -48,7 +48,7 @@ p {
     background-color: #ecf0f1;
     border-radius: 5px;
     margin-bottom: 20px;
-    min-height: 200px;
+    min-height: 150px;
     max-height: 300px;
     overflow-y: auto;
     cursor: text;
@@ -213,4 +213,123 @@ body.error {
     50% { transform: translateX(5px); }
     75% { transform: translateX(-5px); }
     100% { transform: translateX(0); }
+}
+
+/* Custom numeric keypad styles */
+.numeric-keypad {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.keypad-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.keypad-btn {
+    flex: 1;
+    padding: 15px 0;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 8px;
+    background-color: #ecf0f1;
+    color: #2c3e50;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+.keypad-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.keypad-delete {
+    background-color: #e67e22;
+    color: white;
+}
+
+.keypad-reset {
+    background-color: #e74c3c;
+    color: white;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 24px;
+    }
+    
+    p {
+        font-size: 14px;
+    }
+    
+    .pi-display {
+        min-height: 120px;
+        resize: none;
+    }
+    
+    .numeric-keypad {
+        display: flex;
+    }
+    
+    .controls {
+        gap: 10px;
+    }
+    
+    button {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+    
+    #reveal-count {
+        width: 60px;
+        padding: 8px;
+        font-size: 14px;
+    }
+    
+    .pi-start, #digits-display {
+        font-size: 20px;
+    }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        padding: 10px;
+    }
+    
+    h1 {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+    
+    .controls {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .reveal-controls {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .keypad-btn {
+        padding: 12px 0;
+    }
 } 

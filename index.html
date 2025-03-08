@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>PI Digits Challenge</title>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -25,8 +25,32 @@
         <div class="controls">
             <button id="reset-btn">Reset</button>
             <div class="reveal-controls">
-                <input type="number" id="reveal-count" min="1" max="1000" value="1">
+                <input type="number" id="reveal-count" min="1" max="1000" value="1" inputmode="numeric" pattern="[0-9]*">
                 <button id="reveal-next-btn">Reveal</button>
+            </div>
+        </div>
+        
+        <!-- Custom numeric keypad for mobile -->
+        <div class="numeric-keypad" id="numeric-keypad">
+            <div class="keypad-row">
+                <button class="keypad-btn" data-key="1">1</button>
+                <button class="keypad-btn" data-key="2">2</button>
+                <button class="keypad-btn" data-key="3">3</button>
+            </div>
+            <div class="keypad-row">
+                <button class="keypad-btn" data-key="4">4</button>
+                <button class="keypad-btn" data-key="5">5</button>
+                <button class="keypad-btn" data-key="6">6</button>
+            </div>
+            <div class="keypad-row">
+                <button class="keypad-btn" data-key="7">7</button>
+                <button class="keypad-btn" data-key="8">8</button>
+                <button class="keypad-btn" data-key="9">9</button>
+            </div>
+            <div class="keypad-row">
+                <button class="keypad-btn keypad-delete" data-key="delete">⌫</button>
+                <button class="keypad-btn" data-key="0">0</button>
+                <button class="keypad-btn keypad-reset" data-key="reset">Reset</button>
             </div>
         </div>
     </div>

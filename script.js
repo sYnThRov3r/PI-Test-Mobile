@@ -19,10 +19,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const resetBtn = document.getElementById('reset-btn');
     const revealBtn = document.getElementById('reveal-next-btn');
     const revealCount = document.getElementById('reveal-count');
+    const numericKeypad = document.getElementById('numeric-keypad');
+    const keypadButtons = document.querySelectorAll('.keypad-btn');
 
     let enteredDigits = [];
     let streak = 0;
     let lastDigitCorrect = true; // Track if the last digit entered was correct
+    let isMobileDevice = false;
+
+    // Check if the device is mobile
+    function checkMobileDevice() {
+        isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+        
+        // Show/hide numeric keypad based on device type
+        numericKeypad.style.display = isMobileDevice ? 'flex' : 'none';
+        
+        // On mobile, make sure the pi-display doesn't show the system keyboard
+        if (isMobileDevice) {
+            piDisplay.setAttribute('readonly', 'readonly');
+        } else {
+            piDisplay.removeAttribute('readonly');
+        }
+    }
+
+    // Check device type on load and resize
+    checkMobileDevice();
+    window.addEventListener('resize', checkMobileDevice);
 
     // Load saved reveal count from localStorage if available
     if (localStorage.getItem('revealCount')) {
@@ -60,6 +82,40 @@ document.addEventListener('DOMContentLoaded', () => {
     // Handle resize events to ensure proper display
     window.addEventListener('resize', ensureDigitVisible);
     piDisplay.addEventListener('mouseup', ensureDigitVisible); // After resizing with mouse
+
+    // Setup numeric keypad event listeners
+    keypadButtons.forEach(button => {
+        button.addEventListener('click', handleKeypadButtonClick);
+    });
+
+    // Handle keypad button clicks
+    function handleKeypadButtonClick(e) {
+        const key = e.target.getAttribute('data-key');
+        
+        if (key === 'delete') {
+            // Handle delete key - remove the last digit
+            if (enteredDigits.length > 0) {
+                digitsDisplay.removeChild(digitsDisplay.lastChild);
+                enteredDigits.pop();
+                lastDigitCorrect = true; // Reset the flag after deletion
+                updateStats();
+            }
+        } else if (key === 'reset') {
+            // Handle reset key
+            resetGame();
+        } else {
+            // Handle number keys (0-9)
+            // Create a synthetic keyboard event to reuse existing logic
+            const keyEvent = {
+                key: key,
+                preventDefault: () => {}
+            };
+            handleKeyDown(keyEvent);
+        }
+        
+        // Focus back on the pi display
+        piDisplay.focus();
+    }
 
     // Get color for a digit based on its position
     function getDigitColor(index) {
@@ -99,184 +155,141 @@ document.addEventListener('DOMContentLoaded', () => {
                     updateStats();
                 } else {
                     digitElement.classList.add('incorrect');
-                    // Add the temporary error background effect
-                    document.body.classList.add('error');
-                    setTimeout(() => {
-                        document.body.classList.remove('error');
-                    }, 500);
-                    
-                    // Add a shake effect to the display
-                    piDisplay.classList.add('shake');
-                    setTimeout(() => {
-                        piDisplay.classList.remove('shake');
-                    }, 500);
-                    
-                    // Set lastDigitCorrect to false
+                    streak = 0;
                     lastDigitCorrect = false;
-                }
-                
-                // Add digit to display and list
-                digitsDisplay.appendChild(digitElement);
-                enteredDigits.push(inputDigit);
-                
-                // Ensure the latest digit is visible by scrolling to it if needed
-                ensureDigitVisible();
-            } 
-            // Only add a new digit if the last one was correct
-            else if (lastDigitCorrect) {
-                const inputDigit = e.key;
-                const correctDigit = PI_DIGITS[enteredDigits.length];
-                
-                // Create a digit element to display
-                const digitElement = document.createElement('span');
-                digitElement.classList.add('digit');
-                digitElement.textContent = inputDigit;
-                
-                // Set color based on position
-                digitElement.style.color = getDigitColor(enteredDigits.length);
-                
-                // Check if the input digit is correct
-                const isCorrect = inputDigit === correctDigit;
-                
-                if (isCorrect) {
-                    digitElement.classList.add('correct');
-                    streak++;
-                    lastDigitCorrect = true;
                     updateStats();
-                } else {
-                    digitElement.classList.add('incorrect');
-                    // Add the temporary error background effect
-                    document.body.classList.add('error');
-                    setTimeout(() => {
-                        document.body.classList.remove('error');
-                    }, 500);
                     
-                    // Add a shake effect to the display
+                    // Add shake effect to the display
                     piDisplay.classList.add('shake');
+                    document.body.classList.add('error');
+                    
+                    // Remove the shake effect after animation completes
                     setTimeout(() => {
                         piDisplay.classList.remove('shake');
+                        document.body.classList.remove('error');
                     }, 500);
-                    
-                    // Set lastDigitCorrect to false
-                    lastDigitCorrect = false;
                 }
                 
-                // Add digit to display and list
+                // Add the digit to the display
                 digitsDisplay.appendChild(digitElement);
                 enteredDigits.push(inputDigit);
                 
-                // Ensure the latest digit is visible by scrolling to it if needed
+                // Ensure the newly added digit is visible
                 ensureDigitVisible();
+                
+                return;
             }
-        } else if (e.key === 'Backspace') {
-            // Prevent backspace from navigating back
-            e.preventDefault();
             
-            // Allow backspace to remove the last digit if there are any
-            if (enteredDigits.length > 0) {
-                digitsDisplay.removeChild(digitsDisplay.lastChild);
+            // Normal case: adding a new digit
+            const inputDigit = e.key;
+            const correctDigit = PI_DIGITS[enteredDigits.length];
+            
+            // Create a digit element to display
+            const digitElement = document.createElement('span');
+            digitElement.classList.add('digit');
+            digitElement.textContent = inputDigit;
+            
+            // Set color based on position
+            digitElement.style.color = getDigitColor(enteredDigits.length);
+            
+            // Check if the input digit is correct
+            const isCorrect = inputDigit === correctDigit;
+            
+            if (isCorrect) {
+                digitElement.classList.add('correct');
+                streak++;
+                lastDigitCorrect = true;
+                updateStats();
+            } else {
+                digitElement.classList.add('incorrect');
+                streak = 0;
+                lastDigitCorrect = false;
+                updateStats();
                 
-                // If the last digit was correct, decrement the streak
-                if (lastDigitCorrect) {
-                    streak = Math.max(0, streak - 1);
-                    updateStats();
-                }
+                // Add shake effect to the display
+                piDisplay.classList.add('shake');
+                document.body.classList.add('error');
                 
-                enteredDigits.pop();
-                
-                // Set lastDigitCorrect based on the new last digit
-                if (enteredDigits.length > 0) {
-                    const lastIndex = enteredDigits.length - 1;
-                    lastDigitCorrect = enteredDigits[lastIndex] === PI_DIGITS[lastIndex];
-                } else {
-                    lastDigitCorrect = true; // Reset if no digits left
-                }
-                
-                // Ensure proper cursor positioning
-                ensureDigitVisible();
+                // Remove the shake effect after animation completes
+                setTimeout(() => {
+                    piDisplay.classList.remove('shake');
+                    document.body.classList.remove('error');
+                }, 500);
             }
+            
+            // Add the digit to the display
+            digitsDisplay.appendChild(digitElement);
+            enteredDigits.push(inputDigit);
+            
+            // Ensure the newly added digit is visible
+            ensureDigitVisible();
         }
     }
-
-    // Ensure the latest digit is visible
+    
+    // Ensure the last entered digit is visible in the display
     function ensureDigitVisible() {
-        // Scroll to the bottom to ensure the latest digit is visible
-        piDisplay.scrollTop = piDisplay.scrollHeight;
-        
-        // Adjust the width of the digits display to fit the container
-        // This helps with proper text wrapping when resizing
-        const containerWidth = piDisplay.clientWidth;
-        digitsDisplay.style.maxWidth = (containerWidth - 40) + 'px'; // Subtract padding and other elements
+        if (digitsDisplay.lastChild) {
+            digitsDisplay.lastChild.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
     }
-
+    
     // Reset the game
     function resetGame() {
+        digitsDisplay.innerHTML = '';
         enteredDigits = [];
         streak = 0;
         lastDigitCorrect = true;
         updateStats();
-        digitsDisplay.innerHTML = '';
         piDisplay.focus();
-        piDisplay.scrollTop = 0; // Scroll back to the top
     }
-
-    // Update the statistics display
+    
+    // Update the stats display
     function updateStats() {
         currentStreak.textContent = streak;
     }
-
-    // Reveal multiple digits of PI based on the reveal count setting
+    
+    // Reveal the next digits of PI
     function revealDigits() {
-        // If the last digit was incorrect, replace it
+        const count = parseInt(revealCount.value);
+        const startIndex = enteredDigits.length;
+        
+        // Don't reveal if we're at the end of our PI digits
+        if (startIndex >= PI_DIGITS.length) {
+            return;
+        }
+        
+        // Remove any incorrect digit if present
         if (!lastDigitCorrect && enteredDigits.length > 0) {
             digitsDisplay.removeChild(digitsDisplay.lastChild);
             enteredDigits.pop();
         }
         
-        // Get the number of digits to reveal
-        const count = parseInt(revealCount.value);
-        
-        // Limit to remaining digits if count is too large
-        const remainingDigits = PI_DIGITS.length - enteredDigits.length;
-        const actualCount = Math.min(count, remainingDigits);
-        
-        // Reveal the specified number of digits
-        for (let i = 0; i < actualCount; i++) {
-            const currentIndex = enteredDigits.length;
+        // Reveal the next 'count' digits
+        for (let i = 0; i < count && startIndex + i < PI_DIGITS.length; i++) {
+            const digit = PI_DIGITS[startIndex + i];
             
-            if (currentIndex < PI_DIGITS.length) {
-                const digitElement = document.createElement('span');
-                digitElement.classList.add('digit', 'revealed');
-                digitElement.textContent = PI_DIGITS[currentIndex];
-                
-                // Set color based on position
-                digitElement.style.color = getDigitColor(currentIndex);
-                
-                digitsDisplay.appendChild(digitElement);
-                
-                // Add to entered digits and increment streak
-                enteredDigits.push(PI_DIGITS[currentIndex]);
-                streak++;
-            } else {
-                // Break if we've reached the end of PI digits
-                break;
-            }
+            // Create a digit element to display
+            const digitElement = document.createElement('span');
+            digitElement.classList.add('digit', 'revealed');
+            digitElement.textContent = digit;
+            
+            // Set color based on position
+            digitElement.style.color = getDigitColor(startIndex + i);
+            
+            // Add the digit to the display
+            digitsDisplay.appendChild(digitElement);
+            enteredDigits.push(digit);
         }
         
-        // Update stats and ensure visibility
+        // Reset streak since we revealed digits
+        streak = 0;
         lastDigitCorrect = true;
         updateStats();
+        
+        // Ensure the newly added digits are visible
         ensureDigitVisible();
+        
+        // Focus back on the display
         piDisplay.focus();
     }
-
-    // Initialize the display
-    ensureDigitVisible();
-
-    // Add keyboard shortcut for reset (Escape key)
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            resetGame();
-        }
-    });
 }); 
