@@ -32,6 +32,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const showPiBtn = document.getElementById('show-pi-btn');
     const piDigitsPopup = document.getElementById('pi-digits-popup');
     const allDigitsDisplay = document.getElementById('all-digits');
+    
+    // Search feature elements
+    const searchInput = document.getElementById('search-input');
+    const searchBtn = document.getElementById('search-btn');
+    const searchResults = document.getElementById('search-results');
 
     let enteredDigits = [];
     let streak = 0;
@@ -85,6 +90,88 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+    
+    // Search for digits in PI
+    function searchDigits(query) {
+        if (!query || !/^\d+$/.test(query)) {
+            return { found: false, message: 'Please enter a valid sequence of digits.' };
+        }
+        
+        const position = PI_DIGITS.indexOf(query);
+        if (position === -1) {
+            return { found: false, message: `The sequence "${query}" was not found in the first 1000 digits of PI.` };
+        }
+        
+        // Add 1 to position because we're excluding the "3." at the beginning
+        const startPosition = position + 1;
+        const endPosition = startPosition + query.length - 1;
+        
+        return { 
+            found: true, 
+            startPosition, 
+            endPosition,
+            message: `Found "${query}" at position ${startPosition} to ${endPosition} (counting after the decimal point).`
+        };
+    }
+    
+    // Reset search feature
+    function resetSearchFeature() {
+        if (searchInput) {
+            searchInput.value = '';
+        }
+        if (searchResults) {
+            searchResults.textContent = '';
+            searchResults.classList.remove('success', 'error');
+        }
+    }
+    
+    // Search button click handler
+    if (searchBtn) {
+        searchBtn.addEventListener('click', () => {
+            const query = searchInput.value.trim();
+            const result = searchDigits(query);
+            
+            if (result.found) {
+                // Create a more detailed results display
+                searchResults.innerHTML = '';
+                
+                // Create result container
+                const resultContainer = document.createElement('div');
+                resultContainer.classList.add('search-result-container');
+                
+                // Add search string display
+                const searchStringDisplay = document.createElement('div');
+                searchStringDisplay.classList.add('search-string-display');
+                searchStringDisplay.innerHTML = `<strong>Search string:</strong> <span class="search-digits">${query}</span>`;
+                resultContainer.appendChild(searchStringDisplay);
+                
+                // Add position information
+                const positionInfo = document.createElement('div');
+                positionInfo.classList.add('position-info');
+                positionInfo.innerHTML = `<strong>Position:</strong> ${result.startPosition} to ${result.endPosition} (after decimal point)`;
+                resultContainer.appendChild(positionInfo);
+                
+                // Add the result container to search results
+                searchResults.appendChild(resultContainer);
+                searchResults.classList.remove('error');
+                searchResults.classList.add('success');
+            } else {
+                searchResults.textContent = result.message;
+                searchResults.classList.remove('success');
+                searchResults.classList.add('error');
+            }
+        });
+    }
+    
+    // Search input enter key handler
+    if (searchInput) {
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                searchBtn.click();
+            }
+        });
+    }
 
     // Check if the device is mobile
     function checkMobileDevice() {
@@ -195,7 +282,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     updateStats();
                 } else {
                     digitElement.classList.add('incorrect');
-                    streak = 0;
+                    // No longer reset streak on incorrect digit
+                    // streak = 0;
                     lastDigitCorrect = false;
                     updateStats();
                     
@@ -239,7 +327,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateStats();
             } else {
                 digitElement.classList.add('incorrect');
-                streak = 0;
+                // No longer reset streak on incorrect digit
+                // streak = 0;
                 lastDigitCorrect = false;
                 updateStats();
                 
@@ -282,10 +371,42 @@ document.addEventListener('DOMContentLoaded', () => {
         lastDigitCorrect = true;
         updateStats();
         piDisplay.focus();
+        
+        // Also reset the search feature
+        resetSearchFeature();
+        
+        // Reset the all digits display
+        resetAllDigitsDisplay();
     }
     
     // Update the stats display
     function updateStats() {
         currentStreak.textContent = streak;
     }
+    
+    // Reset the all digits display to show all digits without highlighting
+    function resetAllDigitsDisplay() {
+        allDigitsDisplay.textContent = PI_DIGITS;
+    }
+    
+    // Add event listener to reset the all digits display when the popup is closed
+    closePopupButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Reset the all digits display when the popup is closed
+            resetAllDigitsDisplay();
+            
+            // Clear search input and results
+            resetSearchFeature();
+        });
+    });
+    
+    // Also reset the all digits display when clicking outside the popup
+    piDigitsPopup.addEventListener('click', (e) => {
+        if (e.target === piDigitsPopup) {
+            resetAllDigitsDisplay();
+            
+            // Clear search input and results
+            resetSearchFeature();
+        }
+    });
 }); 
