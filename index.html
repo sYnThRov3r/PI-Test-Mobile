@@ -22,8 +22,20 @@
             <div class="info-popup-content">
                 <span class="close-popup">&times;</span>
                 <h2>About PI Digits Challenge</h2>
-                <p>Test how many digits of PI you know! Click and type directly in the box below.</p>
+                <p>Test how many digits of PI you know. Click and type directly in the box below.</p>
                 <p>(Contains the first 1000 digits of PI)</p>
+            </div>
+        </div>
+        
+        <!-- All PI digits popup -->
+        <div id="pi-digits-popup" class="info-popup">
+            <div class="info-popup-content pi-digits-content">
+                <span class="close-popup">&times;</span>
+                <h2>1000 Digits of PI</h2>
+                <div class="all-pi-digits">
+                    <span class="pi-start-full">3.</span>
+                    <span id="all-digits"></span>
+                </div>
             </div>
         </div>
         
@@ -39,10 +51,17 @@
         
         <div class="controls">
             <button id="reset-btn">Reset</button>
-            <div class="reveal-controls">
-                <input type="number" id="reveal-count" min="1" max="1000" value="1" inputmode="numeric" pattern="[0-9]*">
-                <button id="reveal-next-btn">Reveal</button>
+            <button id="show-pi-btn" class="show-pi-btn">Show All Digits</button>
+        </div>
+        
+        <!-- Search section -->
+        <div class="search-section">
+            <h3>Search for Digits</h3>
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Enter digits to search..." pattern="[0-9]+" maxlength="20">
+                <button id="search-btn">Search</button>
             </div>
+            <div id="search-results" class="search-results"></div>
         </div>
         
         <!-- Custom numeric keypad for mobile -->

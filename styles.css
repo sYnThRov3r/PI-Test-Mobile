@@ -407,6 +407,110 @@ body.error {
     color: #2c3e50;
 }
 
+/* Search section styles */
+.search-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.search-section h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.search-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+#search-input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#search-input:focus {
+    border-color: #3498db;
+}
+
+#search-btn {
+    background-color: #9b59b6;
+    min-width: 100px;
+}
+
+#search-btn:hover {
+    background-color: #8e44ad;
+}
+
+.search-results {
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 15px;
+    line-height: 1.4;
+    text-align: center;
+    min-height: 40px;
+}
+
+.search-results.success {
+    background-color: #e8f8f5;
+    color: #27ae60;
+}
+
+.search-results.error {
+    background-color: #fdedec;
+    color: #e74c3c;
+}
+
+/* New search result styles */
+.search-result-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.search-string-display {
+    font-size: 16px;
+}
+
+.search-digits {
+    font-family: monospace;
+    font-weight: bold;
+    color: #e74c3c;
+    background-color: #fffacd;
+    padding: 2px 6px;
+    border-radius: 3px;
+    letter-spacing: 1px;
+}
+
+.position-info {
+    font-size: 15px;
+    color: #2c3e50;
+}
+
+/* Highlighted digits in search results */
+.highlighted-digits {
+    background-color: #fffacd;
+    color: #e74c3c;
+    font-weight: bold;
+    padding: 2px 0;
+    border-radius: 3px;
+    animation: highlight-pulse 2s infinite;
+}
+
+@keyframes highlight-pulse {
+    0%, 100% { background-color: #fffacd; }
+    50% { background-color: #ffec8b; }
+}
+
 /* Mobile responsive styles */
 @media (max-width: 768px) {
     .container {
@@ -464,6 +568,14 @@ body.error {
         font-size: 16px;
         padding: 10px;
     }
+    
+    .search-container {
+        flex-direction: column;
+    }
+    
+    #search-btn {
+        width: 100%;
+    }
 }
 
 /* Small mobile devices */
@@ -492,6 +604,14 @@ body.error {
     }
     
     .all-pi-digits {
+        font-size: 14px;
+    }
+    
+    .search-section {
+        padding: 15px 10px;
+    }
+    
+    .search-results {
         font-size: 14px;
     }
 } 
